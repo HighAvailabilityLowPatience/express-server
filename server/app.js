@@ -1,12 +1,12 @@
 // import packages, and functions
 const express =  require('express')
-const morgan = requre('morgan')
+const morgan = require('morgan')
 const { getData } = require('./controller')
 
 //app creation (express server)
 
 // create your express server below
-var app = express = (req,res)
+const app = express();
 
 
 //middleware
@@ -15,9 +15,14 @@ var app = express = (req,res)
 app.use(morgan('dev'))
 
 //routes
-app.get('/', getData)
 
-// data from json file and the code from my top spots
+//Passing the phone over to the controller
+app.get('/', (req, res) => {
+    res.send('<h1>Top Spots</h1>')
+})
+
+app.get('/data', getData)
+
 
 // finally export the express application
 module.exports = app;

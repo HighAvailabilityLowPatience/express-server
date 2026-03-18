@@ -1,10 +1,11 @@
 const fs = require('fs')
-const raw = fs.readFileSync('data.json')
+const raw = fs.readFileSync(__dirname + '/data.json')
 console.log("RAW FILE:", raw.slice(0,80))
 const data = JSON.parse(raw)
 console.log("PARSED DATA:", data.length)
+let spotList = [];
 
-const getData = () => {
+const getData = (req, res) => {
     //Application logic looping over top spots
 /*This inner function serves as a for loop on each object 
 in the data file that has been passed*/
@@ -13,14 +14,14 @@ data.forEach(function onEachSpot(spot) {
             var topSpot = {
                 name: spot.name,
                 description: spot.description,
-                url: 'https://www.google.com/maps?q=' + spot.location[0] + ',' + spot.location[1]
+                location:  spot.location
             }
-            //topSpot.push(topSpot)
-            console.log(topSpot)
+            console.log("Compiling spot to list", topSpot)
+            spotList.push(topSpot)
+
 })
-res.json(topSpots);
+res.status(200).json(spotList);
 }
 //exporting the phone line for the server to pass the phone
 module.exports = { getData }
 
-//getData()
